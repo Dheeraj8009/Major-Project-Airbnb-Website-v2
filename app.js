@@ -54,7 +54,7 @@ main()
 
 // ✅ Session setup (connect-mongo v6 syntax)
 const store = MongoStore.create({
-  mongoUrl: dbUrl,
+  mongoUrl: dbURL,
   crypto: {
     secret: process.env.SECRET,
   },
