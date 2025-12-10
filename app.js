@@ -37,7 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
-const dbURL = ATLASDB_URL;
+const dbURL = process.env.ATLASDB_URL;
 
 async function main() {
   await mongoose.connect(dbURL);
