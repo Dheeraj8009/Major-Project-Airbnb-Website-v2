@@ -107,6 +107,11 @@ app.use('/listings', listingRouter);
 app.use('/listings/:id/reviews', reviewRouter);
 app.use('/', userRouter);
 
+// ✅ Home route (add here, before 404 handler)
+app.get("/", (req, res) => {
+  res.redirect("/listings");   // or res.render("home");
+});
+
 // 404 handler
 app.all(/.*/, (req, res, next) => {
   next(new ExpressError(404, "Page not found"));
