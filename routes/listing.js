@@ -19,11 +19,11 @@ router.get("/new", isLoggedIn, listingController.renderNewForm);
 // Index + Create
 router.route("/")
   .get(wrapAsync(listingController.index))     
-  // 🔑 Multer catches file from form input: listing[image]
+  // 🔑 Multer must run before validation so req.body is populated
   .post(
     isLoggedIn,
-    validateListing,
-    upload.single("listing[image]"),
+    upload.single("listing[image]"),   // ✅ Multer parses multipart form first
+    validateListing,                   // ✅ Joi validates req.body.listing after Multer
     wrapAsync(listingController.createListing)
   );
 
@@ -33,7 +33,8 @@ router.route("/:id")
   .put(
     isLoggedIn,
     isOwner,
-    upload.single("listing[image]"),   // ✅ Added Multer here for edit form
+    upload.single("listing[image]"),   // ✅ Multer parses edit form first
+    validateListing,                   // ✅ Joi validates req.body.listing
     wrapAsync(listingController.updateListing)
   )     
   .delete(isLoggedIn, isOwner, wrapAsync(listingController.destoryListing));
