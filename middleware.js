@@ -29,9 +29,9 @@ module.exports.isOwner = async (req, res, next) => {
   next();
 };
 
-// ✅ Fixed: validate the nested object (req.body.listing)
+// ✅ Corrected: validate the whole body so Joi sees the outer "listing" key
 module.exports.validateListing = (req, res, next) => {
-  const { error } = listingSchema.validate(req.body.listing);
+  const { error } = listingSchema.validate(req.body);
   if (error) {
     const msg = error.details.map(el => el.message).join(", ");
     throw new ExpressError(400, msg);
