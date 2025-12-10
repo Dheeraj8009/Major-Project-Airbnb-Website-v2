@@ -35,10 +35,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
 
-MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+// MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+
+const dbURL = ATLASDB_URL;
 
 async function main() {
-  await mongoose.connect(MONGO_URL);
+  await mongoose.connect(dbURL);
     }
 
 main()
@@ -63,7 +65,7 @@ const sessionOptions = {
 
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.redirect('/listings');
 });
 
 
